@@ -1,10 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios'
-const baseUrl = 'http://localhost:3002/api/persons'
-
+/* const baseUrl = 'http://localhost:3002/api/persons'
+ */
 
 /* const baseUrl = 'https://fullstack21puhelinluettelo.herokuapp.com/api/persons'
  */
+
+const baseUrl = 'api/persons'
 
 const getAll = () => {
     return axios.get(baseUrl)
