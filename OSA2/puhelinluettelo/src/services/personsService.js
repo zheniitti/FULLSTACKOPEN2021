@@ -1,15 +1,17 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/persons'
+const baseUrl = 'http://localhost:3002/api/persons'
+
+
+/* const baseUrl = 'https://fullstack21puhelinluettelo.herokuapp.com/api/persons'
+ */
 
 const getAll = () => {
     return axios.get(baseUrl)
 }
 
-
-
 const create = newPersonObject => {
-    return axios.post('http://localhost:3001/persons/', newPersonObject)
+    return axios.post(baseUrl, newPersonObject)
 }
 
 const update = (id, newPersonObject) => {
@@ -26,30 +28,5 @@ export default {
     update,
     deletePerson
 }
-
-/* {
-  "persons":[
-    {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    }
-  ]
-} */
 
 
