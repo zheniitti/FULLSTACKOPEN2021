@@ -16,7 +16,7 @@ const Notification = ({ isSuccesful, message }) => {
 
     }
 
-    if (message === null) { console.log('Notification message is null'); return null }
+    if (message === null) { return null }
     return (
         <div style={notificationStyle}>
             {message}
@@ -46,7 +46,7 @@ const App = () => {
         setIsSuccesful(succesful)
         setNotificationMessage(message)
         clearTimeout(timerId)
-        const timerNumber = setTimeout(() => { console.log(`Timeout: ${message}`); setNotificationMessage(null) }, 6000)
+        const timerNumber = setTimeout(() => { setNotificationMessage(null) }, 4000)
         setTimerId(timerNumber)
     }
 
@@ -54,14 +54,16 @@ const App = () => {
         Event.preventDefault()
 
         if (newNumber === '' || newName === '') {
-            /* alert('Number is empty') */
             setNotification(false, 'Name or number is empty')
             return
         }
 
         let isNewName = true
         persons.every(person => {
-            if (person.name === newName) { isNewName = false; return false }
+            if (person.name === newName) {
+                isNewName = false
+                return false
+            }
             else return true
         })
 
@@ -73,8 +75,9 @@ const App = () => {
                     setNewName('')
                     setNewNumber('')
                 })
-                .catch(err => { /* alert(`Failed. Error: ${err}`) */
-                    setNotification(false, `Failed. Error: ${err}`)
+                .catch(error => {
+                    setNotification(false, `Failed. Error: ${error.message}`)
+                    console.log(error.response.data)
                 })
         }
         else {
@@ -91,7 +94,6 @@ const App = () => {
                         }).catch(err => alert(`Persons number updated in the server but error in updating UI. ${err}`))
                     }
                     ).catch(err => {
-                        //alert(`Error updating persons number. ${err}`)
                         if (err.response.status === 404) {
                             setNotification(false, `${person.name} doesn't exist or it is deleted.`)
                             personsServive.getAll().then(response => {
@@ -144,7 +146,9 @@ const App = () => {
 
     return (
         <div>
-            <h2>Phonebook</h2>
+            <h2>Alex's Phonebook</h2>
+            <Notification isSuccesful={isSuccesful} message={notificationMessage} />
+
             <Filter handleFilterChange={handleFilterChange} />
             <h3>Add a new person</h3>
             <PersonForm
@@ -154,7 +158,6 @@ const App = () => {
                 newName={newName}
                 newNumber={newNumber}
             />
-            <Notification isSuccesful={isSuccesful} message={notificationMessage} />
             <h3>Numbers</h3>
             <Persons persons={persons} filter={newFilter} deletePerson={deletePerson} />
         </div>
